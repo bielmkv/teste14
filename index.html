@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nails By Suzan Santos</title>
+    <link rel="icon" type="image/jpg" href="img/favicon.ico">
+
+    <!-- Fonte -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- HEADER / HERO -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="logo-nails">Nails</h1>
+            <p class="logo-by">BY SUZAN SANTOS</p>
+            <p class="hero-sub">Agende seu horário e veja nosso portfólio!</p>
+
+            <nav class="hero-nav">
+                <a href="portifolio.html">PORTFÓLIO</a>
+                <a href="#agendamento">AGENDAR HORÁRIO</a>
+                <a href="https://wa.me/5513997305044" target="_blank">(13) 99730-5044</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- SOBRE / POLÍTICAS -->
+    <section class="info-section">
+        <div class="info-box">
+            <h3>SOBRE MIM</h3>
+            <div class="divider"></div>
+            <p>
+                Olá, amigas! Me chamo Suzan, sou Nail Designer apaixonada por cuidar das suas unhas
+                com delicadeza e qualidade. Meu objetivo é oferecer um atendimento acolhedor
+                e resultados duradouros. Será um prazer cuidar de você! ✨
+            </p>
+        </div>
+
+        <div class="info-box">
+            <h3>POLÍTICAS</h3>
+            <div class="divider"></div>
+            <p>
+                • Tolerância máxima de 10 minutos de atraso.<br>
+                • Cancelamento ou reagendamento com no mínimo 12h de antecedência.<br>
+                • Horários são reservados exclusivamente para cada cliente.
+            </p>
+        </div>
+    </section>
+
+    <!-- SERVIÇOS -->
+    <section class="services">
+        <h2>Nossos Serviços</h2>
+        <span>Qualidade e cuidado em cada detalhe</span>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">✨</div>
+                <h4>Banho de Gel</h4>
+                <p>Fortalecimento e brilho duradouro para suas unhas naturais.</p>
+                <p class="price">Aplicação: <strong>R$ 80,00</strong></p>
+                <p class="price">Manutenção: <strong>R$ 60,00</strong></p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">✨</div>
+                <h4>Gel na Tips</h4>
+                <p>Alongamento elegante com acabamento perfeito e durável.</p>
+                <p class="price">Aplicação: <strong>R$ 100,00</strong></p>
+                <p class="price">Manutenção: <strong>R$ 85,00</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- AGENDAMENTO -->
+    <section id="agendamento">
+        <h2>Agende seu Horário</h2>
+
+        <div class="button-group">
+            <button id="btnSessao">Agendar Aplicação</button>
+            <button id="btnManutencao">Agendar Manutenção</button>
+        </div>
+
+        <!-- FORM APLICAÇÃO -->
+        <div id="formSessao" class="form-container active">
+            <h3>Agendar Aplicação</h3>
+            <form id="appointmentForm">
+                <label>Nome:</label>
+                <input type="text" id="name" required>
+
+                <label>Telefone:</label>
+                <input type="tel" id="phone" required>
+
+                <label>Data:</label>
+                <select id="date" required></select>
+
+                <label>Horário:</label>
+                <select id="time" required></select>
+
+                <label>Serviço:</label>
+                <select id="service" required>
+                    <option value="">Selecione</option>
+                    <option value="Banho De Gel">Banho De Gel – R$80,00</option>
+                    <option value="Gel Na Tips">Gel Na Tips – R$100,00</option>
+                </select>
+
+                <button type="submit">Agendar Aplicação</button>
+            </form>
+        </div>
+
+        <!-- FORM MANUTENÇÃO -->
+        <div id="formManutencao" class="form-container">
+            <h3>Agendar Manutenção</h3>
+            <form id="maintenanceForm">
+                <label>Nome:</label>
+                <input type="text" id="nameM" required>
+
+                <label>Telefone:</label>
+                <input type="tel" id="phoneM" required>
+
+                <label>Última Aplicação:</label>
+                <input type="date" id="lastDate" required>
+
+                <label>Data desejada:</label>
+                <select id="dateM" required></select>
+
+                <label>Horário:</label>
+                <select id="timeM" required></select>
+
+                <label>Tipo de manutenção:</label>
+                <select id="maintenanceType" required>
+                    <option value="">Selecione</option>
+                    <option value="Banho De Gel">Banho De Gel – R$60,00</option>
+                    <option value="Gel Na Tips">Gel Na Tips – R$85,00</option>
+                </select>
+
+                <button type="submit">Agendar Manutenção</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2025 Nails By Suzan Santos · Santos/SP</p>
+    </footer>
+
+    <!-- SCRIPT -->
+     <script type="module">
+        function sendToWhatsApp(message) {
+            const phone = "5513997305044";
+            const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+            window.open(url, "_blank");
+        }
+
+        import { getBookedTimes, saveAppointment } from "./firebase.js";
+
+        const date = document.getElementById("date");
+        const time = document.getElementById("time");
+        const dateM = document.getElementById("dateM");
+        const timeM = document.getElementById("timeM");
+        const appointmentForm = document.getElementById("appointmentForm");
+        const maintenanceForm = document.getElementById("maintenanceForm");
+        const name = document.getElementById("name");
+        const phone = document.getElementById("phone");
+        const service = document.getElementById("service");
+        const nameM = document.getElementById("nameM");
+        const phoneM = document.getElementById("phoneM");
+        const maintenanceType = document.getElementById("maintenanceType");
+        const lastDate = document.getElementById("lastDate"); // Adicionado para referência no script
+
+        const availableTimesPerDay = {
+            sunday: [],
+            monday: ['06:00','18:00'],
+            tuesday: ['06:00','18:00'],
+            wednesday: ['06:00','18:00'],
+            thursday: ['06:00','18:00'],
+            friday: ['06:00','18:00'],
+            saturday: ['17:00','19:00'],
+        };
+
+        const days = ['monday','tuesday','wednesday','thursday','friday','saturday', 'sunday'];
+
+        // 🔹 Funções atualizadas para data local 🔹
+        function generateDates() {
+            const dates = [];
+            const today = new Date();
+            for (let i = 0; i < 30; i++) {
+                const d = new Date(today);
+                d.setDate(today.getDate() + i);
+                // Pular domingos (getDay() === 0)
+                if (d.getDay() === 0) continue;
+                const year = d.getFullYear();
+                const month = String(d.getMonth() + 1).padStart(2, '0');
+                const day = String(d.getDate()).padStart(2, '0');
+                dates.push({ value: `${year}-${month}-${day}`, text: d.toLocaleDateString('pt-BR') });
+            }
+            return dates;
+        }
+
+        async function updateDateOptions(dateSelect, timeSelect) {
+            dateSelect.innerHTML = '<option value="">Selecione</option>';
+            const dates = generateDates();
+            for (const date of dates) {
+                const booked = await getBookedTimes(date.value);
+                const day = days[new Date(date.value).getDay()];
+                const available = availableTimesPerDay[day] || [];
+                const free = available.filter(t => !booked[t]);
+                if (free.length > 0) {
+                    const option = document.createElement('option');
+                    option.value = date.value;
+                    option.textContent = date.text;
+                    dateSelect.appendChild(option);
+                }
+            }
+        }
+
+        async function updateTimeOptions(dateSelect, timeSelect) {
+            timeSelect.innerHTML = '<option value="">Selecione</option>';
+            const date = dateSelect.value;
+            if (!date) return;
+            const booked = await getBookedTimes(date);
+            const day = days[new Date(date).getDay()];
+            const available = availableTimesPerDay[day] || [];
+            available.forEach(time => {
+                if (!booked[time]) {
+                    const opt = document.createElement('option');
+                    opt.value = time;
+                    opt.textContent = time;
+                    timeSelect.appendChild(opt);
+                }
+            });
+        }
+
+        // Adicionar event listeners para alternar entre formulários
+        const btnSessao = document.getElementById("btnSessao");
+        const btnManutencao = document.getElementById("btnManutencao");
+        const formSessao = document.getElementById("formSessao");
+        const formManutencao = document.getElementById("formManutencao");
+
+        btnSessao.addEventListener('click', () => {
+            formSessao.classList.add('active');
+            formManutencao.classList.remove('active');
+        });
+
+        btnManutencao.addEventListener('click', () => {
+            formManutencao.classList.add('active');
+            formSessao.classList.remove('active');
+        });
+
+        date.addEventListener('change', () => updateTimeOptions(date, time));
+        dateM.addEventListener('change', () => updateTimeOptions(dateM, timeM));
+
+        updateDateOptions(date, time);
+        updateDateOptions(dateM, timeM);
+
+        appointmentForm.addEventListener('submit', async e => {
+            e.preventDefault();
+            try {
+                await saveAppointment(date.value, time.value, { name: name.value, phone: phone.value, service: service.value, type: 'aplicacao' });
+               const msg =
+"✨ *NOVO AGENDAMENTO – APLICAÇÃO* ✨\n\n" +
+"👤 Nome: " + name.value + "\n" +
+"📞 Telefone: " + phone.value + "\n" +
+"📅 Data: " + date.value + "\n" +
+"⏰ Horário: " + time.value + "\n" +
+"💅 Serviço: " + service.value;
+
+                sendToWhatsApp(msg);
+                alert("Horário agendado com sucesso!");
+                location.reload();
+            } catch (err) {
+                alert("Este horário já foi reservado.");
+            }
+        });
+
+        maintenanceForm.addEventListener('submit', async e => {
+            e.preventDefault();
+            try {
+                await saveAppointment(dateM.value, timeM.value, { name: nameM.value, phone: phoneM.value, service: maintenanceType.value, type: 'manutencao' });
+                const msg =
+"🔧 *NOVO AGENDAMENTO – MANUTENÇÃO* 🔧\n\n" +
+"👤 Nome: " + nameM.value + "\n" +
+"📞 Telefone: " + phoneM.value + "\n" +
+"📅 Data desejada: " + dateM.value + "\n" +
+"⏰ Horário: " + timeM.value + "\n" +
+"💅 Serviço: " + maintenanceType.value + "\n" +
+"📆 Última aplicação: " + lastDate.value;
+
+                sendToWhatsApp(msg);
+                alert("Manutenção agendada com sucesso!");
+                location.reload();
+            } catch (err) {
+                alert("Este horário já foi reservado.");
+            }
+        });
+    </script>
+</body>
+</html>
